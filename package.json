@@ -1,0 +1,16 @@
+{
+  "name": "docsify-auto-sidebar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "docsify-auto-sidebar": "./bin/main.js"
+  },
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^11.12.1",
+    "typescript": "^3.4.1"
+  }
+}
