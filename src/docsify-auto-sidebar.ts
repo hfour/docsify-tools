@@ -15,7 +15,7 @@ type Entry = {
 
 function niceName(name: string) {
   let splitName = name.split('-');
-  if (Number.isNaN(Number(splitName[0]))) return name;
+  if (Number.isNaN(Number(splitName[0]))) return splitName.join(' ');
   return splitName.slice(1).join(' ');
 }
 

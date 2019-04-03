@@ -40,3 +40,8 @@ Like api-documenter, but it doesn't generate separate files for methods or prope
 the .api.json files in a directory (e.g. in docs/2-API) and then run it:
 
     generate-ts-doc markdown -i docs/2-API -o docs/2-API
+
+
+## Notes
+
+Don't forget to [setup your repo so that github generates a documentation site](https://help.github.com/en/articles/configuring-a-publishing-source-for-github-pages)
