@@ -1,6 +1,11 @@
 # docsify-tools
 
-There are some tools that make it easier to use docsify and typescript's api-extractor
+Quickly document your (typescript or otherwise) projects!
+
+- docsify-init provides a client-side [Docsify](https://docsify.js.org/) based markdown
+  documentation site with full text search
+- generate-ts-doc generates markdown documentation from api-extractor api.json files
+- docsify-auto-sidebar automatically populates the sidebar from the resulting docs tree
 
 ### docsify-init
 
@@ -15,7 +20,7 @@ You can use `docsify-init . .` to initialize in a pure-documentation repo.
 
 ### docsify-auto-sidebar
 
-Generates a new _sidebar.md for docsify. You can prefix directories with a number and a dash to
+Generates a new `_sidebar.md` for docsify. You can prefix directories with a number and a dash to
 control the ordering, the number and dash will not appear in the sidebar text. For example:
 
     1-Guides
