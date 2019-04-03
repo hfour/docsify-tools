@@ -24,7 +24,7 @@
           depth: 6,
           paths: 'auto',
         },
-        plugins: [EditOnGithubPlugin.create('{{REPO_URL}}/edit/master/docs/')],
+        plugins: [EditOnGithubPlugin.create('{{REPO_URL}}/edit/master/{{DOCS_SUBDIR}}/')],
       };
     </script>
     <script src="_docsify/docsify.js" defer></script>

@@ -52,6 +52,8 @@ let repo = vars['REPO_URL'] = repoToHttpsUrl(
 
 vars['REPO_NAME'] = repo.substr(repo.lastIndexOf('/') + 1);
 
+vars['DOCS_SUBDIR'] = path.relative(repoDir, docsDir);
+
 mkdirp.sync(docsDir);
 
 let vendorSrcDir = path.resolve(__dirname, '../vendor/_docsify');
