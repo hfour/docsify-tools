@@ -10,6 +10,8 @@
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
     <link rel="stylesheet" href="_docsify/theme.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.css" />
+    <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
@@ -27,7 +29,9 @@
         plugins: [EditOnGithubPlugin.create('{{REPO_URL}}/edit/master/{{DOCS_SUBDIR}}/')],
       };
     </script>
+    <script src="_docsify/setup-mermaid.js"></script>
     <script src="_docsify/docsify.js" defer></script>
     <script src="_docsify/search.min.js"></script>
+
   </body>
 </html>

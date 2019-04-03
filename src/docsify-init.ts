@@ -29,26 +29,28 @@ let args = yargsCfg.argv;
 
 if (args.help) {
   yargsCfg.showHelp();
-  process.exit(0)
+  process.exit(0);
 }
 
 function repoToHttpsUrl(url: string) {
   if (/^git@/.test(url)) {
-    url = url.replace(':','/')
+    url = url.replace(':', '/');
   }
-  return url.replace(/^git@/, 'https://').replace(/.git$/,'');
+  return url.replace(/^git@/, 'https://').replace(/.git$/, '');
 }
 
 let repoDir = path.resolve(process.cwd(), args.repoDir || '.');
 let docsDir = path.resolve(repoDir, args.docsDir || './docs');
 
-let vars: {[key: string]: string} = {};
+let vars: { [key: string]: string } = {};
 
-let repo = vars['REPO_URL'] = repoToHttpsUrl(
+let repo = (vars['REPO_URL'] = repoToHttpsUrl(
   shell(`git config --get remote.origin.url`, {
     cwd: repoDir
-  }).toString().trim()
-);
+  })
+    .toString()
+    .trim()
+));
 
 vars['REPO_NAME'] = repo.substr(repo.lastIndexOf('/') + 1);
 
@@ -64,14 +66,23 @@ let html = tpl.replace(/\{\{([_A-Z]+)\}\}/g, (_m, name) => vars[name]);
 
 fs.writeFileSync(path.resolve(docsDir, './index.html'), html);
 fs.writeFileSync(path.resolve(docsDir, './.nojekyll'), '');
-if (!fs.existsSync(path.resolve(docsDir,'./README.md'))) {
-  fs.writeFileSync(path.resolve(docsDir, './README.md'), '# Welcome page\n\nPlease add some content.');
+if (!fs.existsSync(path.resolve(docsDir, './README.md'))) {
+  fs.writeFileSync(
+    path.resolve(docsDir, './README.md'),
+    '# Welcome page\n\nPlease add some content.'
+  );
 }
 
 let vendorDestDir = path.resolve(docsDir, './_docsify');
 mkdirp.sync(vendorDestDir);
 
-let staticFiles = ['docsify.js', 'edit-on-github.js', 'search.min.js', 'theme.css'];
+let staticFiles = [
+  'docsify.js',
+  'edit-on-github.js',
+  'search.min.js',
+  'setup-mermaid.js',
+  'theme.css'
+];
 for (let f of staticFiles) {
   fs.copyFileSync(path.resolve(vendorSrcDir, f), path.resolve(vendorDestDir, f));
 }
@@ -84,4 +95,5 @@ console.log(
 Once you have some markdown files, you can auto-generate the sidebar by running
 
   docsify-auto-sidebar -d ${args.docsDir || './docs'}
-  `)
+  `
+);
