@@ -9,7 +9,7 @@ let isDoc = /.md$/;
 
 type Entry = {
   name: string;
-  path: string;
+  link: string;
   children?: Entry[];
 };
 
@@ -19,34 +19,34 @@ function niceName(name: string) {
   return splitName.slice(1).join(' ');
 }
 
-function buildTree(location: string, name = '', tPath = ''): Entry {
+function buildTree(dirPath: string, name = '', dirLink = ''): Entry {
   let children: Entry[] = [];
-  for (let item of fs.readdirSync(location)) {
-    if (ignores.test(item)) continue;
+  for (let fileName of fs.readdirSync(dirPath)) {
+    if (ignores.test(fileName)) continue;
 
-    let iPath = tPath + '/' + item;
-    let iLocation = path.join(location, item);
-    if (fs.statSync(iLocation).isDirectory()) {
-      let sub = buildTree(iLocation, item, iPath);
+    let fileLink = dirLink + '/' + fileName;
+    let filePath = path.join(dirPath, fileName);
+    if (fs.statSync(filePath).isDirectory()) {
+      let sub = buildTree(filePath, fileName, fileLink);
       if (sub.children != null && sub.children.length > 0)
-        children.push(buildTree(iLocation, item, iPath));
-    } else if (isDoc.test(item)) {
-      children.push({ name: item, path: iPath });
+        children.push(sub);
+    } else if (isDoc.test(fileName)) {
+      children.push({ name: fileName, link: fileLink });
     }
   }
 
-  return { name, children, path: tPath };
+  return { name, children, link: dirLink };
 }
 
 function renderToMd(tree: Entry, linkDir = false): string {
   if (!tree.children) {
-    return `- [${niceName(path.basename(tree.name, '.md'))}](${tree.path.replace(/ /g, '%20')})`;
+    return `- [${niceName(path.basename(tree.name, '.md'))}](${tree.link.replace(/ /g, '%20')})`;
   } else {
     let fileNames = new Set(tree.children.filter(c => !c.children).map(c => c.name));
     let dirNames = new Set(tree.children.filter(c => c.children).map(c => c.name + '.md'));
 
     let content = tree.children
-      .filter(c => !fileNames.has(c.name) || !dirNames.has(c.name))
+      .filter(c => (!fileNames.has(c.name) || !dirNames.has(c.name)) && c.name != 'README.md')
       .map(c => renderToMd(c, dirNames.has(c.name + '.md') && fileNames.has(c.name + '.md')))
       .join('\n')
       .split('\n')
@@ -54,11 +54,11 @@ function renderToMd(tree: Entry, linkDir = false): string {
       .join('\n');
     let prefix = '';
     if (tree.name) {
-      if (linkDir)
-        prefix = `- [${niceName(path.basename(tree.name, '.md'))}](${tree.path.replace(
-          / /g,
-          '%20'
-        )})\n`;
+      if (linkDir || fileNames.has('README.md')) {
+        let linkPath = tree.link.replace(/ /g,'%20');
+        if (fileNames.has('README.md')) linkPath += '/README.md';
+        prefix = `- [${niceName(path.basename(tree.name, '.md'))}](${linkPath})\n`;
+      }
       else prefix = `- ${niceName(tree.name)}\n`;
     }
 
