@@ -18,6 +18,7 @@ function niceName(name: string) {
   if (Number.isNaN(Number(splitName[0]))) return name;
   return splitName.slice(1).join(' ');
 }
+
 function buildTree(location: string, name = '', tPath = ''): Entry {
   let children: Entry[] = [];
   for (let item of fs.readdirSync(location)) {
