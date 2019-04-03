@@ -16,9 +16,13 @@ Usage:
 Initializes docsify in the specified repo and docs sub-directory. By default, the repo is the
 current directory and the subdirectory is "docs".
 
-You can use `docsify-init . .` to initialize in a pure-documentation repo.
+You can use `docsify-init -r . -d .` to initialize in a pure-documentation repo.
 
 ### docsify-auto-sidebar
+
+Usage:
+
+    docsify-auto-sidebar -d docs
 
 Generates a new `_sidebar.md` for docsify. You can prefix directories with a number and a dash to
 control the ordering, the number and dash will not appear in the sidebar text. For example:
@@ -32,6 +36,7 @@ Other dashes will be replaced with spaces
 
 ### generate-ts-doc
 
-Like api-documenter, but it doesn't generate separate files for methods or properties.
+Like api-documenter, but it doesn't generate separate files for methods or properties. Create
+the .api.json files in a directory (e.g. in docs/2-API) and then run it:
 
     generate-ts-doc markdown -i docs/2-API -o docs/2-API

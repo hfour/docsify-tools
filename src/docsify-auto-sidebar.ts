@@ -67,7 +67,7 @@ function renderToMd(tree: Entry, linkDir = false): string {
 
 let args = yargs
   .wrap(yargs.terminalWidth() - 1)
-  .usage('$0[-d docsDir] ')
+  .usage('$0 [-d docsDir] ')
   .options({
     docsDir: {
       alias: 'd',

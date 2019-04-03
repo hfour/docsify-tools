@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as yargs from 'yargs';
 import * as mkdirp from 'mkdirp';
 
-let args = yargs
+let yargsCfg = yargs
   .wrap(yargs.terminalWidth() - 1)
   .usage('$0 [-r repoDir] [-d docsDir] ')
   .options({
@@ -23,10 +23,12 @@ let args = yargs
       type: 'boolean',
       describe: 'Show this help screen'
     }
-  }).argv;
+  });
+
+let args = yargsCfg.argv;
 
 if (args.help) {
-  yargs.showHelp();
+  yargsCfg.showHelp();
   process.exit(0)
 }
 
