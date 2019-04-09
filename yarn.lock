@@ -285,7 +285,7 @@
     "@microsoft/tsdoc" "0.12.8"
     "@types/node" "8.5.8"
 
-"@microsoft/api-extractor@^7.0.34":
+"@microsoft/api-extractor@7.0.36":
   version "7.0.36"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.0.36.tgz#7d9e9606247ef5e2e14111b3b437191f66260afc"
   integrity sha512-bA7RD7ud6TpiMiNceFwfcx9O6gv5ibC4URgMPbT35urYpUku05Eqsrliv3ShI1/Yyg+7rMC+hOFrHx8FKMR2pw==

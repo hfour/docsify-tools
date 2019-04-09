@@ -192,7 +192,7 @@ export class MarkdownEmitter {
         break;
       }
       default:
-        throw new Error('Unsupported element kind: ' + docNode.kind);
+        console.warn('Unsupported element kind: ' + docNode.kind); break;
     }
   }
 
