@@ -821,3 +821,12 @@ code .token {
   -moz-osx-font-smoothing: initial;
   min-height: 1.5rem;
 }
+
+figcaption {
+  font-size: 15px;
+  color: #79828B;
+  padding: 12px 21px 12px 0;
+  line-height: 18px;
+  vertical-align: top;
+  text-align: center;
+}
