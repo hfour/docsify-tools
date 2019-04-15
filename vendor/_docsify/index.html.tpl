@@ -18,6 +18,7 @@
     <script src="_docsify/edit-on-github.js"></script>
     <script>
       window.$docsify = {
+        auto2top: true,
         name: '{{REPO_NAME}}',
         repo: '{{REPO_URL}}',
         loadSidebar: '_sidebar.md',
