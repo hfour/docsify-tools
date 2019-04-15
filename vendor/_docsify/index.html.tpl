@@ -26,7 +26,7 @@
           depth: 6,
           paths: 'auto',
         },
-        plugins: [EditOnGithubPlugin.create('{{REPO_URL}}/edit/master/{{DOCS_SUBDIR}}/')],
+        plugins: [EditOnGithubPlugin.create('{{REPO_URL}}/edit/master/{{EDIT_SUBDIR}}/')],
       };
     </script>
     <script src="_docsify/setup-mermaid.js"></script>

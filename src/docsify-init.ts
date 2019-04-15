@@ -18,6 +18,11 @@ let yargsCfg = yargs
       type: 'string',
       describe: 'Where to look for the documentation (defaults to docs subdir of repo directory)'
     },
+    editDir: {
+      alias: 'e',
+      type: 'string',
+      describe: 'Relative path for documentation editing (defaults to docsDir)'
+    },
     help: {
       alias: 'h',
       type: 'boolean',
@@ -41,6 +46,7 @@ function repoToHttpsUrl(url: string) {
 
 let repoDir = path.resolve(process.cwd(), args.repoDir || '.');
 let docsDir = path.resolve(repoDir, args.docsDir || './docs');
+let editDir = args.editDir || path.relative(repoDir, docsDir);
 
 let vars: { [key: string]: string } = {};
 
@@ -54,7 +60,7 @@ let repo = (vars['REPO_URL'] = repoToHttpsUrl(
 
 vars['REPO_NAME'] = repo.substr(repo.lastIndexOf('/') + 1);
 
-vars['DOCS_SUBDIR'] = path.relative(repoDir, docsDir);
+vars['EDIT_SUBDIR'] = editDir
 
 mkdirp.sync(docsDir);
 
