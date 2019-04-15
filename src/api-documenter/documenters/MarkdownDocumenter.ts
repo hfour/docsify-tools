@@ -211,7 +211,7 @@ export class MarkdownDocumenter {
         // Write the @remarks block
         if (tsdocComment.remarksBlock) {
           output.appendNode(
-            new DocHeading({ configuration: this._tsdocConfiguration, title: 'Remarks' })
+            new DocHeading({ configuration: this._tsdocConfiguration, title: 'Remarks', level: 4 })
           );
           this._appendSection(output, tsdocComment.remarksBlock.content);
         }
@@ -226,7 +226,7 @@ export class MarkdownDocumenter {
           const heading: string = exampleBlocks.length > 1 ? `Example ${exampleNumber}` : 'Example';
 
           output.appendNode(
-            new DocHeading({ configuration: this._tsdocConfiguration, title: heading })
+            new DocHeading({ configuration: this._tsdocConfiguration, title: heading, level: 4 })
           );
 
           this._appendSection(output, exampleBlock.content);
