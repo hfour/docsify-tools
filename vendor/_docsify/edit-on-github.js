@@ -1,45 +1,40 @@
-;(function(win) {
-  win.EditOnGithubPlugin = {}
+(function(win) {
+  win.EditOnGithubPlugin = {};
 
-  function create(docBase, docEditBase, title) {
-    title = title || 'Edit on github'
-    docEditBase = docBase.replace(/\/blob\//, '/edit/')
+  function create(opts) {
+    if (!opts.repo) throw new Error('Must specify at least repo dir');
 
-    function editDoc(event, vm) {
-      var docName = vm.route.file
+    opts = opts || {};
+    opts.title = opts.title || 'Edit on github';
+    opts.docDir = opts.docDir == null ? 'docs' : opts.docDir;
 
-      if (docName) {
-        var editLink = docEditBase + docName
-        window.open(editLink)
-        event.preventDefault()
-        return false
+    function getEditUrl(docName, frontmatter) {
+      if (frontmatter && frontmatter.noEdit) return null;
+      let url = [];
+      if (frontmatter && frontmatter.originalPath) {
+        url = [opts.repo, 'edit/master', frontmatter.originalPath];
       } else {
-        return true
+        url = [opts.repo, 'edit/master', opts.docDir, docName];
       }
+      return url.filter(item => item).join('/');
     }
-
-    win.EditOnGithubPlugin.editDoc = editDoc
 
     return function(hook, vm) {
-      win.EditOnGithubPlugin.onClick = function(event) {
-        EditOnGithubPlugin.editDoc(event, vm)
-      }
-
-      var header = [
-        '<div style="overflow: auto">',
-        '<p style="float: right"><a href="',
-        docBase,
-        '" target="_blank" onclick="EditOnGithubPlugin.onClick(event)">',
-        title,
-        '</a></p>',
-        '</div>'
-      ].join('')
-
-      hook.afterEach(function (html) {
-        return header + html
-      })
-    }
+      hook.afterEach(function(html) {
+        let editLink = getEditUrl(vm.route.file, vm.frontmatter);
+        var header = [
+          '<div style="overflow: auto">',
+          '<p style="float: right"><a href="',
+          editLink,
+          '" target="_blank">',
+          opts.title,
+          '</a></p>',
+          '</div>',
+        ].join('');
+        return editLink ? header + html : html;
+      });
+    };
   }
 
-  win.EditOnGithubPlugin.create = create
-}) (window)
+  win.EditOnGithubPlugin.create = create;
+})(window);

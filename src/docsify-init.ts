@@ -46,7 +46,7 @@ function repoToHttpsUrl(url: string) {
 
 let repoDir = path.resolve(process.cwd(), args.repoDir || '.');
 let docsDir = path.resolve(repoDir, args.docsDir || './docs');
-let editDir = args.editDir || path.relative(repoDir, docsDir);
+let editDir = args.editDir == null ? path.relative(repoDir, docsDir) : args.editDir
 
 let vars: { [key: string]: string } = {};
 
@@ -66,7 +66,7 @@ mkdirp.sync(docsDir);
 
 let vendorSrcDir = path.resolve(__dirname, '../vendor/_docsify');
 
-let tpl = fs.readFileSync(path.resolve(vendorSrcDir, 'index.html.tpl'), 'utf8');
+let tpl = fs.readFileSync(path.resolve(vendorSrcDir, 'index.html'), 'utf8');
 
 let html = tpl.replace(/\{\{([_A-Z]+)\}\}/g, (_m, name) => vars[name]);
 
