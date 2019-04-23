@@ -85,6 +85,7 @@ mkdirp.sync(vendorDestDir);
 let staticFiles = [
   'docsify.js',
   'edit-on-github.js',
+  'front-matter.js',
   'search.min.js',
   'setup-mermaid.js',
   'theme.css'
