@@ -16,7 +16,7 @@
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^11.13.0",
     "@types/yargs": "^12.0.11",
-    "typescript": "^3.4.1"
+    "typescript": "^3.4.5"
   },
   "dependencies": {
     "@microsoft/api-extractor": "7.0.36",

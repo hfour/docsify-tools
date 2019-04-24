@@ -62,6 +62,15 @@ vars['REPO_NAME'] = repo.substr(repo.lastIndexOf('/') + 1);
 
 vars['EDIT_SUBDIR'] = editDir
 
+try {
+  let pkgjson = JSON.parse(fs.readFileSync(path.resolve(repoDir, 'package.json'), 'utf8'))
+  vars['TITLE'] = `${pkgjson.name} documentation`
+  vars['DESCRIPTION'] = pkgjson.description;
+} catch (e) {
+  vars['TITLE'] = 'Documentation'
+  vars['DESCRIPTION'] = 'Documentation';
+}
+
 mkdirp.sync(docsDir);
 
 let vendorSrcDir = path.resolve(__dirname, '../vendor/_docsify');
