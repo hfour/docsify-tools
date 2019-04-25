@@ -276,7 +276,7 @@
     "@types/istanbul-lib-coverage" "^1.1.0"
     "@types/yargs" "^12.0.9"
 
-"@microsoft/api-extractor-model@7.0.28", "@microsoft/api-extractor-model@^7.0.28":
+"@microsoft/api-extractor-model@^7.0.28":
   version "7.0.28"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.0.28.tgz#691b077415143a9015ed1656bca6d0b9a77f58cb"
   integrity sha512-kZJaWwdu3z5A1DugJpOZ9dI5+DjIEhqQJwHn2/kLTpsKT7gOyqNRbGHlDGG8xSiJ6/m994+cwh3qSGYDC17dtw==
@@ -284,21 +284,6 @@
     "@microsoft/node-core-library" "3.13.0"
     "@microsoft/tsdoc" "0.12.8"
     "@types/node" "8.5.8"
-
-"@microsoft/api-extractor@7.0.36":
-  version "7.0.36"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.0.36.tgz#7d9e9606247ef5e2e14111b3b437191f66260afc"
-  integrity sha512-bA7RD7ud6TpiMiNceFwfcx9O6gv5ibC4URgMPbT35urYpUku05Eqsrliv3ShI1/Yyg+7rMC+hOFrHx8FKMR2pw==
-  dependencies:
-    "@microsoft/api-extractor-model" "7.0.28"
-    "@microsoft/node-core-library" "3.13.0"
-    "@microsoft/ts-command-line" "4.2.3"
-    "@microsoft/tsdoc" "0.12.8"
-    colors "~1.2.1"
-    lodash "~4.17.5"
-    resolve "1.8.1"
-    source-map "~0.6.1"
-    typescript "~3.1.6"
 
 "@microsoft/node-core-library@3.13.0":
   version "3.13.0"
@@ -314,7 +299,7 @@
     jju "~1.4.0"
     z-schema "~3.18.3"
 
-"@microsoft/ts-command-line@4.2.3", "@microsoft/ts-command-line@^4.2.3":
+"@microsoft/ts-command-line@^4.2.3":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.2.3.tgz#20d6a1684148b9fc0df25ee7335c3bb227d47d4f"
   integrity sha512-SIs4q7RcG7efBbh5Ffrf6V4jVLxWihD4NDRY3+gPiOG8CYawBzE22tTEloZ1yj/FBvBZQkQ0GYwXoPhn6ElYXA==
@@ -2263,7 +2248,7 @@ lodash.sortby@^4.7.0:
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
-lodash@^4.17.11, lodash@~4.17.5:
+lodash@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
@@ -2655,7 +2640,7 @@ path-key@^2.0.0, path-key@^2.0.1:
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
   integrity sha1-QRyttXTFoUDTpLGRDUDYDMn0C0A=
 
-path-parse@^1.0.5, path-parse@^1.0.6:
+path-parse@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
   integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
@@ -2900,13 +2885,6 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
   integrity sha1-IDEU2CrSxe2ejgQRs5ModeiJ6Xs=
-
-resolve@1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.8.1.tgz#82f1ec19a423ac1fbd080b0bab06ba36e84a7a26"
-  integrity sha512-AicPrAC7Qu1JxPCZ9ZgCZlY35QgFnNqc+0LtbRNxnVw4TXvjQ72wnuL9JQcEBgXkI9JM8MsT9kaQoHcpCRJOYA==
-  dependencies:
-    path-parse "^1.0.5"
 
 resolve@1.x, resolve@^1.10.0, resolve@^1.3.2:
   version "1.10.0"
@@ -3373,11 +3351,6 @@ typescript@^3.4.5:
   version "3.4.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
   integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
-
-typescript@~3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.6.tgz#b6543a83cfc8c2befb3f4c8fba6896f5b0c9be68"
-  integrity sha512-tDMYfVtvpb96msS1lDX9MEdHrW4yOuZ4Kdc4Him9oU796XldPYF/t2+uKoX0BBa0hXXwDlqYQbXY5Rzjzc5hBA==
 
 uglify-js@^3.1.4:
   version "3.5.3"
