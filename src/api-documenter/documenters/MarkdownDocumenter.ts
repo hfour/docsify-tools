@@ -153,6 +153,21 @@ export class MarkdownDocumenter {
       }
     }
 
+    if (apiItem instanceof ApiDocumentedItem) {
+      const tsdocComment: DocComment | undefined = apiItem.tsdocComment;
+
+      if (tsdocComment) {
+        // Write the @remarks block
+        if (tsdocComment.remarksBlock) {
+          output.appendNode(
+            new DocHeading({ configuration: this._tsdocConfiguration, title: 'Remarks', level: 4 })
+          );
+          this._appendSection(output, tsdocComment.remarksBlock.content);
+        }
+      }
+    }
+
+
     if (apiItem instanceof ApiDeclaredItem) {
       if (apiItem.excerpt.text.length > 0) {
         output.appendNode(
@@ -208,13 +223,6 @@ export class MarkdownDocumenter {
       const tsdocComment: DocComment | undefined = apiItem.tsdocComment;
 
       if (tsdocComment) {
-        // Write the @remarks block
-        if (tsdocComment.remarksBlock) {
-          output.appendNode(
-            new DocHeading({ configuration: this._tsdocConfiguration, title: 'Remarks', level: 4 })
-          );
-          this._appendSection(output, tsdocComment.remarksBlock.content);
-        }
 
         // Write the @example blocks
         const exampleBlocks: DocBlock[] = tsdocComment.customBlocks.filter(
