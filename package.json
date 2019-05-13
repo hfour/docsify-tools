@@ -25,7 +25,6 @@
     "@microsoft/ts-command-line": "^4.2.3",
     "colors": "^1.3.3",
     "mkdirp": "^0.5.1",
-    
     "yargs": "^13.2.2"
   }
 }
