@@ -1,13 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import * as path from "path";
-import * as mkdirp from "mkdirp";
-import {
-  PackageName,
-  FileSystem,
-  NewlineKind
-} from "@rushstack/node-core-library";
+import * as path from 'path';
+import * as mkdirp from 'mkdirp';
+import { PackageName, FileSystem, NewlineKind } from '@rushstack/node-core-library';
 import {
   DocSection,
   DocPlainText,
@@ -21,7 +17,7 @@ import {
   StandardTags,
   DocBlock,
   DocComment
-} from "@microsoft/tsdoc";
+} from '@microsoft/tsdoc';
 import {
   ApiModel,
   ApiItem,
@@ -40,18 +36,18 @@ import {
   ApiReturnTypeMixin,
   ApiDeclaredItem,
   ApiNamespace
-} from "@microsoft/api-extractor-model";
+} from '@microsoft/api-extractor-model';
 
-import { CustomDocNodes } from "../nodes/CustomDocNodeKind";
-import { DocHeading } from "../nodes/DocHeading";
-import { DocTable } from "../nodes/DocTable";
-import { DocEmphasisSpan } from "../nodes/DocEmphasisSpan";
-import { DocTableRow } from "../nodes/DocTableRow";
-import { DocTableCell } from "../nodes/DocTableCell";
-import { DocNoteBox } from "../nodes/DocNoteBox";
-import { Utilities } from "../utils/Utilities";
-import { CustomMarkdownEmitter } from "../markdown/CustomMarkdownEmitter";
-import { DocLinkAnchor } from "../nodes/DocLinkAnchor";
+import { CustomDocNodes } from '../nodes/CustomDocNodeKind';
+import { DocHeading } from '../nodes/DocHeading';
+import { DocTable } from '../nodes/DocTable';
+import { DocEmphasisSpan } from '../nodes/DocEmphasisSpan';
+import { DocTableRow } from '../nodes/DocTableRow';
+import { DocTableCell } from '../nodes/DocTableCell';
+import { DocNoteBox } from '../nodes/DocNoteBox';
+import { Utilities } from '../utils/Utilities';
+import { CustomMarkdownEmitter } from '../markdown/CustomMarkdownEmitter';
+import { DocLinkAnchor } from '../nodes/DocLinkAnchor';
 
 /**
  * Renders API documentation in the Markdown file format.
@@ -90,19 +86,13 @@ export class MarkdownDocumenter {
 
     switch (apiItem.kind) {
       case ApiItemKind.Class:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} class` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} class` }));
         break;
       case ApiItemKind.Enum:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} enum` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} enum` }));
         break;
       case ApiItemKind.Interface:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} interface` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} interface` }));
         break;
       case ApiItemKind.Method:
       case ApiItemKind.MethodSignature:
@@ -115,19 +105,13 @@ export class MarkdownDocumenter {
         );
         break;
       case ApiItemKind.Function:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} function` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} function` }));
         break;
       case ApiItemKind.Namespace:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} namespace` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} namespace` }));
         break;
       case ApiItemKind.Package:
-        const unscopedPackageName: string = PackageName.getUnscopedName(
-          apiItem.displayName
-        );
+        const unscopedPackageName: string = PackageName.getUnscopedName(apiItem.displayName);
         output.appendNode(
           new DocHeading({
             configuration,
@@ -146,17 +130,13 @@ export class MarkdownDocumenter {
         );
         break;
       case ApiItemKind.TypeAlias:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} type` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} type` }));
         break;
       case ApiItemKind.Variable:
-        output.appendNode(
-          new DocHeading({ configuration, title: `${scopedName} variable` })
-        );
+        output.appendNode(new DocHeading({ configuration, title: `${scopedName} variable` }));
         break;
       default:
-        throw new Error("Unsupported API item kind: " + apiItem.kind);
+        throw new Error('Unsupported API item kind: ' + apiItem.kind);
     }
 
     if (ApiReleaseTagMixin.isBaseClassOf(apiItem)) {
@@ -175,7 +155,7 @@ export class MarkdownDocumenter {
               new DocParagraph({ configuration: this._tsdocConfiguration }, [
                 new DocPlainText({
                   configuration: this._tsdocConfiguration,
-                  text: "Warning: This API is now obsolete. "
+                  text: 'Warning: This API is now obsolete. '
                 })
               ]),
               ...tsdocComment.deprecatedBlock.content.nodes
@@ -196,7 +176,7 @@ export class MarkdownDocumenter {
           output.appendNode(
             new DocHeading({
               configuration: this._tsdocConfiguration,
-              title: "Remarks",
+              title: 'Remarks',
               level: 4
             })
           );
@@ -210,7 +190,7 @@ export class MarkdownDocumenter {
         output.appendNode(
           new DocParagraph({ configuration }, [
             new DocEmphasisSpan({ configuration, bold: true }, [
-              new DocPlainText({ configuration, text: "Signature:" })
+              new DocPlainText({ configuration, text: 'Signature:' })
             ])
           ])
         );
@@ -218,7 +198,7 @@ export class MarkdownDocumenter {
           new DocFencedCode({
             configuration,
             code: apiItem.getExcerptWithModifiers(),
-            language: "typescript"
+            language: 'typescript'
           })
         );
       }
@@ -253,7 +233,7 @@ export class MarkdownDocumenter {
       case ApiItemKind.Variable:
         break;
       default:
-        throw new Error("Unsupported API item kind: " + apiItem.kind);
+        throw new Error('Unsupported API item kind: ' + apiItem.kind);
     }
 
     if (apiItem instanceof ApiDocumentedItem) {
@@ -262,15 +242,12 @@ export class MarkdownDocumenter {
       if (tsdocComment) {
         // Write the @example blocks
         const exampleBlocks: DocBlock[] = tsdocComment.customBlocks.filter(
-          x =>
-            x.blockTag.tagNameWithUpperCase ===
-            StandardTags.example.tagNameWithUpperCase
+          x => x.blockTag.tagNameWithUpperCase === StandardTags.example.tagNameWithUpperCase
         );
 
         let exampleNumber: number = 1;
         for (const exampleBlock of exampleBlocks) {
-          const heading: string =
-            exampleBlocks.length > 1 ? `Example ${exampleNumber}` : "Example";
+          const heading: string = exampleBlocks.length > 1 ? `Example ${exampleNumber}` : 'Example';
 
           output.appendNode(
             new DocHeading({
@@ -297,10 +274,7 @@ export class MarkdownDocumenter {
 
     this._writeApiItem(apiItem, output);
 
-    const filename: string = path.join(
-      this._outputFolder,
-      this._getFilenameForApiItem(apiItem)
-    );
+    const filename: string = path.join(this._outputFolder, this._getFilenameForApiItem(apiItem));
     const stringBuilder: StringBuilder = new StringBuilder();
 
     this._markdownEmitter.emit(stringBuilder, output, {
@@ -328,45 +302,42 @@ export class MarkdownDocumenter {
   /**
    * GENERATE PAGE: PACKAGE or NAMESPACE
    */
-  private _writePackageOrNamespaceTables(
-    output: DocSection,
-    apiContainer: ApiPackage | ApiNamespace
-  ): void {
+  private _writePackageOrNamespaceTables(output: DocSection, apiContainer: ApiPackage | ApiNamespace): void {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
 
     const classesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Class", "Description"]
+      headerTitles: ['Class', 'Description']
     });
 
     const enumerationsTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Enumeration", "Description"]
+      headerTitles: ['Enumeration', 'Description']
     });
 
     const functionsTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Function", "Description"]
+      headerTitles: ['Function', 'Description']
     });
 
     const interfacesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Interface", "Description"]
+      headerTitles: ['Interface', 'Description']
     });
 
     const namespacesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Namespace", "Description"]
+      headerTitles: ['Namespace', 'Description']
     });
 
     const variablesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Variable", "Description"]
+      headerTitles: ['Variable', 'Description']
     });
 
     const typeAliasesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Type Alias", "Description"]
+      headerTitles: ['Type Alias', 'Description']
     });
 
     const apiMembers: ReadonlyArray<ApiItem> =
@@ -422,7 +393,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Classes"
+          title: 'Classes'
         })
       );
       output.appendNode(classesTable);
@@ -432,7 +403,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Enumerations"
+          title: 'Enumerations'
         })
       );
       output.appendNode(enumerationsTable);
@@ -441,7 +412,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Functions"
+          title: 'Functions'
         })
       );
       output.appendNode(functionsTable);
@@ -451,7 +422,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Interfaces"
+          title: 'Interfaces'
         })
       );
       output.appendNode(interfacesTable);
@@ -461,7 +432,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Namespaces"
+          title: 'Namespaces'
         })
       );
       output.appendNode(namespacesTable);
@@ -471,7 +442,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Variables"
+          title: 'Variables'
         })
       );
       output.appendNode(variablesTable);
@@ -481,7 +452,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Type Aliases"
+          title: 'Type Aliases'
         })
       );
       output.appendNode(typeAliasesTable);
@@ -491,25 +462,22 @@ export class MarkdownDocumenter {
   /**
    * GENERATE PAGE: CLASS
    */
-  private _writeClassTables(
-    output: DocSection,
-    apiClass: ApiClass | ApiInterface
-  ): void {
+  private _writeClassTables(output: DocSection, apiClass: ApiClass | ApiInterface): void {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
 
     const eventsTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Property", "Type", "Description"]
+      headerTitles: ['Property', 'Type', 'Description']
     });
 
     const propertiesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Property", "Type", "Description"]
+      headerTitles: ['Property', 'Type', 'Description']
     });
 
     const methodsTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Method", "Description"]
+      headerTitles: ['Method', 'Description']
     });
 
     for (const apiMember of apiClass.members) {
@@ -557,7 +525,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Events"
+          title: 'Events'
         })
       );
       output.appendNode(eventsTable);
@@ -567,7 +535,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Properties"
+          title: 'Properties'
         })
       );
       output.appendNode(propertiesTable);
@@ -577,7 +545,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Methods"
+          title: 'Methods'
         })
       );
       output.appendNode(methodsTable);
@@ -592,7 +560,7 @@ export class MarkdownDocumenter {
 
     const enumMembersTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Member", "Value", "Description"]
+      headerTitles: ['Member', 'Value', 'Description']
     });
 
     for (const apiEnumMember of apiEnum.members) {
@@ -625,7 +593,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Enumeration Members"
+          title: 'Enumeration Members'
         })
       );
       output.appendNode(enumMembersTable);
@@ -635,25 +603,22 @@ export class MarkdownDocumenter {
   /**
    * GENERATE PAGE: INTERFACE
    */
-  private _writeInterfaceTables(
-    output: DocSection,
-    apiClass: ApiInterface | ApiClass
-  ): void {
+  private _writeInterfaceTables(output: DocSection, apiClass: ApiInterface | ApiClass): void {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
 
     const eventsTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Property", "Type", "Description"]
+      headerTitles: ['Property', 'Type', 'Description']
     });
 
     const propertiesTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Property", "Type", "Description"]
+      headerTitles: ['Property', 'Type', 'Description']
     });
 
     const methodsTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Method", "Description"]
+      headerTitles: ['Method', 'Description']
     });
 
     let properties: ApiItem[] = [],
@@ -707,7 +672,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Events"
+          title: 'Events'
         })
       );
       output.appendNode(eventsTable);
@@ -718,7 +683,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Properties"
+          title: 'Properties'
         })
       );
       output.appendNode(propertiesTable);
@@ -729,7 +694,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Methods"
+          title: 'Methods'
         })
       );
       output.appendNode(methodsTable);
@@ -740,15 +705,12 @@ export class MarkdownDocumenter {
   /**
    * GENERATE PAGE: FUNCTION-LIKE
    */
-  private _writeParameterTables(
-    output: DocSection,
-    apiParameterListMixin: ApiParameterListMixin
-  ): void {
+  private _writeParameterTables(output: DocSection, apiParameterListMixin: ApiParameterListMixin): void {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
 
     const parametersTable: DocTable = new DocTable({
       configuration,
-      headerTitles: ["Parameter", "Type", "Description"]
+      headerTitles: ['Parameter', 'Type', 'Description']
     });
 
     for (const apiParameter of apiParameterListMixin.parameters) {
@@ -756,10 +718,7 @@ export class MarkdownDocumenter {
         configuration
       });
       if (apiParameter.tsdocParamBlock) {
-        this._appendSection(
-          parameterDescription,
-          apiParameter.tsdocParamBlock.content
-        );
+        this._appendSection(parameterDescription, apiParameter.tsdocParamBlock.content);
       }
 
       parametersTable.addRow(
@@ -786,7 +745,7 @@ export class MarkdownDocumenter {
       output.appendNode(
         new DocHeading({
           configuration: this._tsdocConfiguration,
-          title: "Parameters",
+          title: 'Parameters',
           level: 4
         })
       );
@@ -794,12 +753,11 @@ export class MarkdownDocumenter {
     }
 
     if (ApiReturnTypeMixin.isBaseClassOf(apiParameterListMixin)) {
-      const returnTypeExcerpt: Excerpt =
-        apiParameterListMixin.returnTypeExcerpt;
+      const returnTypeExcerpt: Excerpt = apiParameterListMixin.returnTypeExcerpt;
       output.appendNode(
         new DocParagraph({ configuration }, [
           new DocEmphasisSpan({ configuration, bold: true }, [
-            new DocPlainText({ configuration, text: "Returns:" })
+            new DocPlainText({ configuration, text: 'Returns:' })
           ])
         ])
       );
@@ -808,36 +766,27 @@ export class MarkdownDocumenter {
         new DocParagraph({ configuration }, [
           new DocCodeSpan({
             configuration,
-            code: returnTypeExcerpt.text.trim() || "(not declared)"
+            code: returnTypeExcerpt.text.trim() || '(not declared)'
           })
         ])
       );
 
       if (apiParameterListMixin instanceof ApiDocumentedItem) {
-        if (
-          apiParameterListMixin.tsdocComment &&
-          apiParameterListMixin.tsdocComment.returnsBlock
-        ) {
-          this._appendSection(
-            output,
-            apiParameterListMixin.tsdocComment.returnsBlock.content
-          );
+        if (apiParameterListMixin.tsdocComment && apiParameterListMixin.tsdocComment.returnsBlock) {
+          this._appendSection(output, apiParameterListMixin.tsdocComment.returnsBlock.content);
         }
       }
     }
   }
 
-  private _createTitleCell(
-    apiItem: ApiItem,
-    originalItem: ApiItem
-  ): DocTableCell {
+  private _createTitleCell(apiItem: ApiItem, originalItem: ApiItem): DocTableCell {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
 
     return new DocTableCell({ configuration }, [
       new DocParagraph({ configuration }, [
         new DocLinkTag({
           configuration,
-          tagName: "@link",
+          tagName: '@link',
           linkText: Utilities.getConciseSignature(apiItem),
           urlDestination: this._getLinkFilenameForApiItem(apiItem, originalItem)
         })
@@ -861,19 +810,16 @@ export class MarkdownDocumenter {
       if (apiItem.releaseTag === ReleaseTag.Beta) {
         section.appendNodesInParagraph([
           new DocEmphasisSpan({ configuration, bold: true, italic: true }, [
-            new DocPlainText({ configuration, text: "(BETA)" })
+            new DocPlainText({ configuration, text: '(BETA)' })
           ]),
-          new DocPlainText({ configuration, text: " " })
+          new DocPlainText({ configuration, text: ' ' })
         ]);
       }
     }
 
     if (apiItem instanceof ApiDocumentedItem) {
       if (apiItem.tsdocComment !== undefined) {
-        this._appendAndMergeSection(
-          section,
-          apiItem.tsdocComment.summarySection
-        );
+        this._appendAndMergeSection(section, apiItem.tsdocComment.summarySection);
       }
     }
 
@@ -887,9 +833,7 @@ export class MarkdownDocumenter {
 
     if (ApiStaticMixin.isBaseClassOf(apiItem)) {
       if (apiItem.isStatic) {
-        section.appendNodeInParagraph(
-          new DocCodeSpan({ configuration, code: "static" })
-        );
+        section.appendNodeInParagraph(new DocCodeSpan({ configuration, code: 'static' }));
       }
     }
 
@@ -917,9 +861,9 @@ export class MarkdownDocumenter {
     output.appendNodeInParagraph(
       new DocLinkTag({
         configuration: this._tsdocConfiguration,
-        tagName: "@link",
-        linkText: "Home",
-        urlDestination: "/"
+        tagName: '@link',
+        linkText: 'Home',
+        urlDestination: '/'
       })
     );
 
@@ -935,16 +879,13 @@ export class MarkdownDocumenter {
           output.appendNodesInParagraph([
             new DocPlainText({
               configuration: this._tsdocConfiguration,
-              text: " > "
+              text: ' > '
             }),
             new DocLinkTag({
               configuration: this._tsdocConfiguration,
-              tagName: "@link",
+              tagName: '@link',
               linkText: hierarchyItem.displayName,
-              urlDestination: this._getLinkFilenameForApiItem(
-                hierarchyItem,
-                apiItem
-              )
+              urlDestination: this._getLinkFilenameForApiItem(hierarchyItem, apiItem)
             })
           ]);
       }
@@ -954,13 +895,11 @@ export class MarkdownDocumenter {
   private _writeBetaWarning(output: DocSection): void {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
     const betaWarning: string =
-      "This API is provided as a preview for developers and may change" +
-      " based on feedback that we receive.  Do not use this API in a production environment.";
+      'This API is provided as a preview for developers and may change' +
+      ' based on feedback that we receive.  Do not use this API in a production environment.';
     output.appendNode(
       new DocNoteBox({ configuration }, [
-        new DocParagraph({ configuration }, [
-          new DocPlainText({ configuration, text: betaWarning })
-        ])
+        new DocParagraph({ configuration }, [new DocPlainText({ configuration, text: betaWarning })])
       ])
     );
   }
@@ -971,10 +910,7 @@ export class MarkdownDocumenter {
     }
   }
 
-  private _appendAndMergeSection(
-    output: DocSection,
-    docSection: DocSection
-  ): void {
+  private _appendAndMergeSection(output: DocSection, docSection: DocSection): void {
     let firstNode: boolean = true;
     for (const node of docSection.nodes) {
       if (firstNode) {
@@ -991,7 +927,7 @@ export class MarkdownDocumenter {
   }
 
   private _getFilenameForApiItem(apiItem: ApiItem): string {
-    let baseName: string = "";
+    let baseName: string = '';
     for (const hierarchyItem of apiItem.getHierarchy()) {
       // For overloaded methods, add a suffix such as "MyClass.myMethod_2".
       let qualifiedName: string = hierarchyItem.displayName;
@@ -1012,21 +948,18 @@ export class MarkdownDocumenter {
         case ApiItemKind.MethodSignature:
         case ApiItemKind.Property:
         case ApiItemKind.PropertySignature:
-          baseName += ".md#" + hierarchyItem.displayName.toLowerCase();
+          baseName += '.md#' + hierarchyItem.displayName.toLowerCase();
           break;
         default:
-          baseName += "/" + qualifiedName;
+          baseName += '/' + qualifiedName;
       }
     }
     // console.log(baseName)
-    if (baseName.indexOf("#") < 0) return baseName + ".md";
+    if (baseName.indexOf('#') < 0) return baseName + '.md';
     else return baseName;
   }
 
-  private _getLinkFilenameForApiItem(
-    apiItem: ApiItem,
-    fromApiItem: ApiItem
-  ): string {
+  private _getLinkFilenameForApiItem(apiItem: ApiItem, fromApiItem: ApiItem): string {
     let myDirname = path.dirname(this._getFilenameForApiItem(fromApiItem));
     let otherFilename = this._getFilenameForApiItem(apiItem);
     // console.log(myDirname, otherFilename, '->', path.relative(myDirname, otherFilename))
@@ -1035,7 +968,7 @@ export class MarkdownDocumenter {
   }
 
   private _deleteOldOutputFiles(): void {
-    console.log("Deleting old output from " + this._outputFolder);
+    console.log('Deleting old output from ' + this._outputFolder);
     FileSystem.ensureEmptyFolder(this._outputFolder);
   }
 }

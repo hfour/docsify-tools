@@ -1,22 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import * as path from "path";
-import * as tsdoc from "@microsoft/tsdoc";
-import * as colors from "colors";
+import * as path from 'path';
+import * as tsdoc from '@microsoft/tsdoc';
+import * as colors from 'colors';
 
-import {
-  CommandLineAction,
-  CommandLineStringParameter
-} from "@microsoft/ts-command-line";
-import { FileSystem } from "@rushstack/node-core-library";
+import { CommandLineAction, CommandLineStringParameter } from '@microsoft/ts-command-line';
+import { FileSystem } from '@rushstack/node-core-library';
 import {
   ApiModel,
   ApiItem,
   ApiItemContainerMixin,
   ApiDocumentedItem,
   IResolveDeclarationReferenceResult
-} from "@microsoft/api-extractor-model";
+} from '@microsoft/api-extractor-model';
 
 export abstract class BaseAction extends CommandLineAction {
   protected inputFolder!: string;
@@ -28,18 +25,18 @@ export abstract class BaseAction extends CommandLineAction {
   protected onDefineParameters(): void {
     // override
     this._inputFolderParameter = this.defineStringParameter({
-      parameterLongName: "--input-folder",
-      parameterShortName: "-i",
-      argumentName: "FOLDER1",
+      parameterLongName: '--input-folder',
+      parameterShortName: '-i',
+      argumentName: 'FOLDER1',
       description:
         `Specifies the input folder containing the *.api.json files to be processed.` +
         ` If omitted, the default is "./input"`
     });
 
     this._outputFolderParameter = this.defineStringParameter({
-      parameterLongName: "--output-folder",
-      parameterShortName: "-o",
-      argumentName: "FOLDER2",
+      parameterLongName: '--output-folder',
+      parameterShortName: '-o',
+      argumentName: 'FOLDER2',
       description:
         `Specifies the output folder where the documentation will be written.` +
         ` ANY EXISTING CONTENTS WILL BE DELETED!` +
@@ -50,13 +47,12 @@ export abstract class BaseAction extends CommandLineAction {
   protected buildApiModel(): ApiModel {
     const apiModel: ApiModel = new ApiModel();
 
-    this.inputFolder = this._inputFolderParameter.value || "./input";
+    this.inputFolder = this._inputFolderParameter.value || './input';
     if (!FileSystem.exists(this.inputFolder)) {
-      throw new Error("The input folder does not exist: " + this.inputFolder);
+      throw new Error('The input folder does not exist: ' + this.inputFolder);
     }
 
-    this.outputFolder =
-      this._outputFolderParameter.value || `./${this.actionName}`;
+    this.outputFolder = this._outputFolderParameter.value || `./${this.actionName}`;
     FileSystem.ensureFolder(this.outputFolder);
 
     for (const filename of FileSystem.readFolder(this.inputFolder)) {
@@ -78,8 +74,7 @@ export abstract class BaseAction extends CommandLineAction {
   private _applyInheritDoc(apiItem: ApiItem, apiModel: ApiModel): void {
     if (apiItem instanceof ApiDocumentedItem) {
       if (apiItem.tsdocComment) {
-        const inheritDocTag: tsdoc.DocInheritDocTag | undefined =
-          apiItem.tsdocComment.inheritDocTag;
+        const inheritDocTag: tsdoc.DocInheritDocTag | undefined = apiItem.tsdocComment.inheritDocTag;
 
         if (inheritDocTag && inheritDocTag.declarationReference) {
           // Attempt to resolve the declaration reference
@@ -90,8 +85,7 @@ export abstract class BaseAction extends CommandLineAction {
 
           if (result.errorMessage) {
             console.log(
-              `Warning: Unresolved @inheritDoc tag for ${apiItem.displayName}: ` +
-                result.errorMessage
+              `Warning: Unresolved @inheritDoc tag for ${apiItem.displayName}: ` + result.errorMessage
             );
           } else {
             if (
@@ -99,10 +93,7 @@ export abstract class BaseAction extends CommandLineAction {
               result.resolvedApiItem.tsdocComment &&
               result.resolvedApiItem !== apiItem
             ) {
-              this._copyInheritedDocs(
-                apiItem.tsdocComment,
-                result.resolvedApiItem.tsdocComment
-              );
+              this._copyInheritedDocs(apiItem.tsdocComment, result.resolvedApiItem.tsdocComment);
             }
           }
         }
@@ -121,10 +112,7 @@ export abstract class BaseAction extends CommandLineAction {
    * Copy the content from `sourceDocComment` to `targetDocComment`.
    * This code is borrowed from DocCommentEnhancer as a temporary workaround.
    */
-  private _copyInheritedDocs(
-    targetDocComment: tsdoc.DocComment,
-    sourceDocComment: tsdoc.DocComment
-  ): void {
+  private _copyInheritedDocs(targetDocComment: tsdoc.DocComment, sourceDocComment: tsdoc.DocComment): void {
     targetDocComment.summarySection = sourceDocComment.summarySection;
     targetDocComment.remarksBlock = sourceDocComment.remarksBlock;
 

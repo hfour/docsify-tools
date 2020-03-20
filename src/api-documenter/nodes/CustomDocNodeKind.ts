@@ -14,13 +14,13 @@ import { DocLinkAnchor } from './DocLinkAnchor';
  * Identifies custom subclasses of {@link DocNode}.
  */
 export const enum CustomDocNodeKind {
-  EmphasisSpan                  = 'EmphasisSpan',
-  Heading                       = 'Heading',
-  NoteBox                       = 'NoteBox',
-  Table                         = 'Table',
-  TableCell                     = 'TableCell',
-  TableRow                      = 'TableRow',
-  LinkAnchor                    = 'LinkAnchor'
+  EmphasisSpan = 'EmphasisSpan',
+  Heading = 'Heading',
+  NoteBox = 'NoteBox',
+  Table = 'Table',
+  TableCell = 'TableCell',
+  TableRow = 'TableRow',
+  LinkAnchor = 'LinkAnchor'
 }
 
 export class CustomDocNodes {
@@ -31,13 +31,22 @@ export class CustomDocNodes {
       const configuration: TSDocConfiguration = new TSDocConfiguration();
 
       configuration.docNodeManager.registerDocNodes('@micrososft/api-documenter', [
-        { docNodeKind: CustomDocNodeKind.EmphasisSpan, constructor: DocEmphasisSpan },
+        {
+          docNodeKind: CustomDocNodeKind.EmphasisSpan,
+          constructor: DocEmphasisSpan
+        },
         { docNodeKind: CustomDocNodeKind.Heading, constructor: DocHeading },
         { docNodeKind: CustomDocNodeKind.NoteBox, constructor: DocNoteBox },
         { docNodeKind: CustomDocNodeKind.Table, constructor: DocTable },
-        { docNodeKind: CustomDocNodeKind.TableCell, constructor: DocTableCell },
+        {
+          docNodeKind: CustomDocNodeKind.TableCell,
+          constructor: DocTableCell
+        },
         { docNodeKind: CustomDocNodeKind.TableRow, constructor: DocTableRow },
-        { docNodeKind: CustomDocNodeKind.LinkAnchor, constructor: DocLinkAnchor }
+        {
+          docNodeKind: CustomDocNodeKind.LinkAnchor,
+          constructor: DocLinkAnchor
+        }
       ]);
 
       configuration.docNodeManager.registerAllowableChildren(CustomDocNodeKind.EmphasisSpan, [

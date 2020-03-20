@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { StringBuilder, IStringBuilder } from "@rushstack/node-core-library";
+import { StringBuilder, IStringBuilder } from '@rushstack/node-core-library';
 
 /**
  * A utility for writing indented text.
@@ -35,7 +35,7 @@ export class IndentedWriter {
    * The text characters used to create one level of indentation.
    * Two spaces by default.
    */
-  public defaultIndentPrefix: string = "  ";
+  public defaultIndentPrefix: string = '  ';
 
   private readonly _builder: IStringBuilder;
 
@@ -54,7 +54,7 @@ export class IndentedWriter {
     this._atStartOfLine = true;
 
     this._indentStack = [];
-    this._indentText = "";
+    this._indentText = '';
   }
 
   /**
@@ -76,9 +76,7 @@ export class IndentedWriter {
    * corresponding call to IndentedWriter.decreaseIndent().
    */
   public increaseIndent(indentPrefix?: string): void {
-    this._indentStack.push(
-      indentPrefix !== undefined ? indentPrefix : this.defaultIndentPrefix
-    );
+    this._indentStack.push(indentPrefix !== undefined ? indentPrefix : this.defaultIndentPrefix);
     this._updateIndentText();
   }
 
@@ -106,7 +104,7 @@ export class IndentedWriter {
    */
   public ensureNewLine(): void {
     const lastCharacter: string = this.peekLastCharacter();
-    if (lastCharacter !== "\n" && lastCharacter !== "") {
+    if (lastCharacter !== '\n' && lastCharacter !== '') {
       this._writeNewLine();
     }
   }
@@ -115,12 +113,12 @@ export class IndentedWriter {
    * Adds up to two newlines to ensure that there is a blank line above the current line.
    */
   public ensureSkippedLine(): void {
-    if (this.peekLastCharacter() !== "\n") {
+    if (this.peekLastCharacter() !== '\n') {
       this._writeNewLine();
     }
 
     const secondLastCharacter: string = this.peekSecondLastCharacter();
-    if (secondLastCharacter !== "\n" && secondLastCharacter !== "") {
+    if (secondLastCharacter !== '\n' && secondLastCharacter !== '') {
       this._writeNewLine();
     }
   }
@@ -132,7 +130,7 @@ export class IndentedWriter {
     if (this._latestChunk !== undefined) {
       return this._latestChunk.substr(-1, 1);
     }
-    return "";
+    return '';
   }
 
   /**
@@ -148,7 +146,7 @@ export class IndentedWriter {
         return this._previousChunk.substr(-1, 1);
       }
     }
-    return "";
+    return '';
   }
 
   /**
@@ -169,14 +167,14 @@ export class IndentedWriter {
 
     // Otherwise split the lines and write each one individually
     let first: boolean = true;
-    for (const linePart of message.split("\n")) {
+    for (const linePart of message.split('\n')) {
       if (!first) {
         this._writeNewLine();
       } else {
         first = false;
       }
       if (linePart) {
-        this._writeLinePart(linePart.replace(/[\r]/g, ""));
+        this._writeLinePart(linePart.replace(/[\r]/g, ''));
       }
     }
   }
@@ -185,7 +183,7 @@ export class IndentedWriter {
    * A shorthand for writing an optional message, followed by a newline.
    * Indentation is applied following the semantics of IndentedWriter.write().
    */
-  public writeLine(message: string = ""): void {
+  public writeLine(message: string = ''): void {
     if (message.length > 0) {
       this.write(message);
     }
@@ -210,7 +208,7 @@ export class IndentedWriter {
       this._write(this._indentText);
     }
 
-    this._write("\n");
+    this._write('\n');
     this._atStartOfLine = true;
   }
 
@@ -221,6 +219,6 @@ export class IndentedWriter {
   }
 
   private _updateIndentText(): void {
-    this._indentText = this._indentStack.join("");
+    this._indentText = this._indentStack.join('');
   }
 }

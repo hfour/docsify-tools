@@ -28,8 +28,7 @@ function buildTree(dirPath: string, name = '', dirLink = ''): Entry {
     let filePath = path.join(dirPath, fileName);
     if (fs.statSync(filePath).isDirectory()) {
       let sub = buildTree(filePath, fileName, fileLink);
-      if (sub.children != null && sub.children.length > 0)
-        children.push(sub);
+      if (sub.children != null && sub.children.length > 0) children.push(sub);
     } else if (isDoc.test(fileName)) {
       children.push({ name: fileName, link: fileLink });
     }
@@ -55,11 +54,10 @@ function renderToMd(tree: Entry, linkDir = false): string {
     let prefix = '';
     if (tree.name) {
       if (linkDir || fileNames.has('README.md')) {
-        let linkPath = tree.link.replace(/ /g,'%20');
+        let linkPath = tree.link.replace(/ /g, '%20');
         if (fileNames.has('README.md')) linkPath += '/README.md';
         prefix = `- [${niceName(path.basename(tree.name, '.md'))}](${linkPath})\n`;
-      }
-      else prefix = `- ${niceName(tree.name)}\n`;
+      } else prefix = `- ${niceName(tree.name)}\n`;
     }
 
     return prefix + content;

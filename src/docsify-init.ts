@@ -46,7 +46,7 @@ function repoToHttpsUrl(url: string) {
 
 let repoDir = path.resolve(process.cwd(), args.repoDir || '.');
 let docsDir = path.resolve(repoDir, args.docsDir || './docs');
-let editDir = args.editDir == null ? path.relative(repoDir, docsDir) : args.editDir
+let editDir = args.editDir == null ? path.relative(repoDir, docsDir) : args.editDir;
 
 let vars: { [key: string]: string } = {};
 
@@ -60,14 +60,14 @@ let repo = (vars['REPO_URL'] = repoToHttpsUrl(
 
 vars['REPO_NAME'] = repo.substr(repo.lastIndexOf('/') + 1);
 
-vars['EDIT_SUBDIR'] = editDir
+vars['EDIT_SUBDIR'] = editDir;
 
 try {
-  let pkgjson = JSON.parse(fs.readFileSync(path.resolve(repoDir, 'package.json'), 'utf8'))
-  vars['TITLE'] = `${pkgjson.name} documentation`
+  let pkgjson = JSON.parse(fs.readFileSync(path.resolve(repoDir, 'package.json'), 'utf8'));
+  vars['TITLE'] = `${pkgjson.name} documentation`;
   vars['DESCRIPTION'] = pkgjson.description;
 } catch (e) {
-  vars['TITLE'] = 'Documentation'
+  vars['TITLE'] = 'Documentation';
   vars['DESCRIPTION'] = 'Documentation';
 }
 
@@ -82,10 +82,7 @@ let html = tpl.replace(/\{\{([_A-Z]+)\}\}/g, (_m, name) => vars[name]);
 fs.writeFileSync(path.resolve(docsDir, './index.html'), html);
 fs.writeFileSync(path.resolve(docsDir, './.nojekyll'), '');
 if (!fs.existsSync(path.resolve(docsDir, './README.md'))) {
-  fs.writeFileSync(
-    path.resolve(docsDir, './README.md'),
-    '# Welcome page\n\nPlease add some content.'
-  );
+  fs.writeFileSync(path.resolve(docsDir, './README.md'), '# Welcome page\n\nPlease add some content.');
 }
 
 let vendorDestDir = path.resolve(docsDir, './_docsify');
