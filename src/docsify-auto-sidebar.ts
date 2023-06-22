@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yargs from 'yargs';
 
-let ignores = /node_modules|^\.|_sidebar|_docsify/;
+let ignores = /node_modules|^\.|_sidebar|_navbar|_coverpage|_docsify/;
 let isDoc = /.md$/;
 
 type Entry = {
