@@ -82,6 +82,6 @@ try {
   fs.writeFileSync(path.join(dir, '_sidebar.md'), renderToMd(root));
 } catch (e) {
   console.error('Unable to generate sidebar for directory', dir);
-  console.error('Reason:', e.message);
+  console.error('Reason:', (e as Error).message);
   process.exit(1);
 }
